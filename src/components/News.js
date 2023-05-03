@@ -3,6 +3,7 @@ import NewsItem from './NewsItem'
 import Spinner from './spinner';
 import PropTypes from 'prop-types'
 import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "axios";
 
 const News = (props)=>{
     const [articles, setArticles] = useState([])
@@ -18,9 +19,9 @@ const News = (props)=>{
         props.setProgress(10);
         const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=b8c43dd637a04a80abb7f7f23bf3774f&page=${page}&pageSize=${props.pageSize}`; 
         setLoading(true)
-        let data = await fetch(url);
+        let data = await axios.get(url);
         props.setProgress(30);
-        let parsedData = await data.json()
+        let parsedData = data.data;
         props.setProgress(70);
         setArticles(parsedData.articles)
         console.log(parsedData.articles)
@@ -50,8 +51,9 @@ const News = (props)=>{
     const fetchMoreData = async () => {   
         setPage(page+1) 
         const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=b8c43dd637a04a80abb7f7f23bf3774f&page=${page}&pageSize=${props.pageSize}`;
-        let data = await fetch(url);
-        let parsedData = await data.json()
+        let data = await axios.get(url);
+        let parsedData = data.data;
+        console.log(parsedData);
         setArticles(articles.concat(parsedData.articles))
         setTotalResults(parsedData.totalResults)
       };
@@ -69,8 +71,8 @@ const News = (props)=>{
                     <div className="container">
                          
                     <div className="row">
-                        {articles.map((element) => {
-                            return <div className="col-md-4" key={element.url}>
+                        {articles.map((element,id) => {
+                            return <div className="col-md-4" key={id}>
                                 {console.log(element.url)}
                                 <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} iurl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
                             </div>
