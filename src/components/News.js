@@ -33,7 +33,7 @@ const News = (props)=>{
 
     useEffect(() => {
         updateNews(); 
-    }, [])
+    },[])
  
 
     // const handlePrevClick = async () => {
@@ -70,6 +70,7 @@ const News = (props)=>{
                     <div className="row">
                         {articles.map((element) => {
                             return <div className="col-md-4" key={element.url}>
+                                {console.log(element.url)}
                                 <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} iurl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
                             </div>
                         })}

@@ -2,7 +2,7 @@ import React from "react";
 
 const NewsItem=(props)=> {
 
-    let { title, desc, iurl, arti,author,date,source} = props;
+    let { title, desc, iurl,newsUrl,author,date,source} = props;
     return (
       <div className="container my-3">
         <div className="card" >
@@ -13,7 +13,7 @@ const NewsItem=(props)=> {
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{zIndex:1,left:'90%'}}> {source} </span>
             <p className="card-text">{desc}...</p>
             <p className="card-text"><small className="text-muted">By {!author?"Unknown": author} on {date}</small></p>
-            <a href={arti} target="_blank" rel="noreferrer" className="btn btn-dark">
+            <a href={newsUrl} target="_blank" rel="noreferrer" className="btn btn-dark">
               Read more
             </a>
           </div>
